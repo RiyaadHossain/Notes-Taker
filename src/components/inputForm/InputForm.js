@@ -1,12 +1,12 @@
 import React from "react";
 
-const inputForm = () => {
+const inputForm = ({insertNote}) => {
 
 
 
   return (
     <div className=" p-3 color-4D4C7D">
-      <form className="container " >
+      <form onSubmit={insertNote} className="container " >
         <div className="input-group mb-3 mt-5">
           <input
             type="text"

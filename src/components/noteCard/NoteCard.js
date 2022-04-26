@@ -10,7 +10,7 @@ const customStyles = {
   width: "80px",
 };
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, deleteNote }) => {
 
 
   return (
@@ -22,7 +22,7 @@ const NoteCard = ({ note }) => {
         >
           <p className="text-center p-2  fs-2 fw-bold text-dark">
             {" "}
-            {note.user_name.substring(0, 1)}
+            {note.user_name?.substring(0, 1)}
           </p>
         </div>
         <div className="card-body mt-5">
@@ -33,9 +33,9 @@ const NoteCard = ({ note }) => {
           <div>
             <button
               className="color-801336 btn btn-sm mx-2 "
-              
+              onClick={() => deleteNote(note._id)}
             >
-              delete
+              Delete
             </button>
           </div>
           {/* <button>update</button> */}
