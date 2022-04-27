@@ -9,7 +9,7 @@ function App() {
   const [isReload, setIsReload] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/notes")
+    fetch("https://stormy-wave-03725.herokuapp.com/notes")
       .then((res) => res.json())
       .then((data) => setNotes(data));
   }, [isReload]);
@@ -20,7 +20,7 @@ function App() {
     e.preventDefault();
     const searchText = e.target.searchText?.value;
     if (searchText) {
-      fetch(`http://localhost:5000/notes?user_name=${searchText}`)
+      fetch(`https://stormy-wave-03725.herokuapp.com/notes?user_name=${searchText}`)
         .then((res) => res.json())
         .then((data) => setNotes(data));
     } else {
@@ -33,7 +33,7 @@ function App() {
   const deleteNote = (id) => {
    const confirm = window.confirm("Are You Sure You want to Delete?")
     if (confirm) {
-      fetch(`http://localhost:5000/note/${id}`, {
+      fetch(`https://stormy-wave-03725.herokuapp.com/note/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -50,7 +50,7 @@ function App() {
     const text = e.target.text.value;
 
     if (user_name && text) {
-      fetch(`http://localhost:5000/note/${id}`, {
+      fetch(`https://stormy-wave-03725.herokuapp.com/note/${id}`, {
         method: "PUT",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ user_name, text }),
@@ -70,7 +70,7 @@ function App() {
     e.preventDefault();
     const user_name = e.target.user_name.value;
     const text = e.target.text.value;
-    fetch("http://localhost:5000/note", {
+    fetch("https://stormy-wave-03725.herokuapp.com/note", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ user_name, text }),
