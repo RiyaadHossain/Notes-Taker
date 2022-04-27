@@ -1,4 +1,5 @@
 import React from 'react';
+// import { useParams } from "react-router-dom";
 import UpdateModal from '../updateModal/UpdateModal';
 
 
@@ -10,7 +11,7 @@ const customStyles = {
   width: "80px",
 };
 
-const NoteCard = ({ note, deleteNote }) => {
+const NoteCard = ({ note, deleteNote, updateNote }) => {
 
 
   return (
@@ -39,7 +40,7 @@ const NoteCard = ({ note, deleteNote }) => {
             </button>
           </div>
           {/* <button>update</button> */}
-          <UpdateModal  />
+          <UpdateModal id={note._id} updateNote={updateNote}  />
         </div>
       </div>
     </div>

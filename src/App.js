@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [isReload, setIsReload] = useState(false)
+  const [isReload, setIsReload] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:5000/notes")
@@ -28,26 +28,37 @@ function App() {
   // 2.Function: To Delete Note
 
   const deleteNote = (id) => {
-    console.log(id);
     fetch(`http://localhost:5000/note/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setIsReload(!isReload)
       });
   };
 
-  /*
-3. there will be a function named handleUpdate
-    to update data, and it will be passed as props to NoteCard and 
-   later it will be passed to Update modal using props.
- */
+  // 3.Function: To Update Note
+  const updateNote = (e,id, closeModal) => {
+    e.preventDefault()
+    const user_name = e.target.user_name.value
+    const text = e.target.text.value
+    
+    if (user_name, text) {
+      fetch(`http://localhost:5000/note/${id}`, {
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({user_name, text}),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setIsReload(!isReload)
+        closeModal()
+      });
+    }
+  }
 
-  /*
-4.  there will be a function named handlePost
-to post data to backend, and it will be passed as props to InputFrom.
- */
+  // 4.Function: To POST Note
 
   const insertNote = (e) => {
     e.preventDefault();
@@ -60,8 +71,8 @@ to post data to backend, and it will be passed as props to InputFrom.
     })
       .then((res) => res.json())
       .then((data) => {
-        e.target.reset()
-        setIsReload(!isReload)
+        e.target.reset();
+        setIsReload(!isReload);
       });
   };
 
@@ -71,7 +82,7 @@ to post data to backend, and it will be passed as props to InputFrom.
       <InputForm insertNote={insertNote} />
       <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
         {notes.map((note) => (
-          <NoteCard key={note._id} note={note} deleteNote={deleteNote} />
+          <NoteCard key={note._id} updateNote={updateNote} note={note} deleteNote={deleteNote} />
         ))}
       </div>
     </div>

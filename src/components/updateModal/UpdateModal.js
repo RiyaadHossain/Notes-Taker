@@ -19,7 +19,8 @@ Modal.setAppElement("#root");
 
 //don't worry its just a package for modal. just go and explore https://www.npmjs.com/package/react-modal
 
-export default function UpdateModal() {
+export default function UpdateModal({ updateNote, id }) {
+  
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -54,13 +55,14 @@ export default function UpdateModal() {
         </button>
         <div>Please insert your text</div>
         <div className=" p-3 color-4D4C7D">
-          <form className="container " >
+          <form onSubmit={(e) => updateNote(e,id, closeModal)} className="container " >
             <div className="input-group mb-3 mt-5">
               <input
                 type="text"
                 className="form-control"
                 placeholder="Your name"
                 aria-label="Username"
+                name="user_name"
               />
             </div>
 
@@ -68,6 +70,7 @@ export default function UpdateModal() {
               <textarea
                 className="form-control"
                 aria-label="With textarea"
+                name="text"
               ></textarea>
             </div>
             <div className="mt-4">
