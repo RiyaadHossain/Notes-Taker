@@ -19,44 +19,50 @@ function App() {
   const searchNote = (e) => {
     e.preventDefault();
     const searchText = e.target.searchText?.value;
-
-    fetch(`http://localhost:5000/notes?user_name=${searchText}`)
-      .then((res) => res.json())
-      .then((data) => setNotes(data));
+    if (searchText) {
+      fetch(`http://localhost:5000/notes?user_name=${searchText}`)
+        .then((res) => res.json())
+        .then((data) => setNotes(data));
+    } else {
+      alert("Please Type User Name to Search Note");
+    }
   };
 
   // 2.Function: To Delete Note
 
   const deleteNote = (id) => {
-    fetch(`http://localhost:5000/note/${id}`, {
+   const confirm = window.confirm("Are You Sure You want to Delete?")
+    if (confirm) {
+      fetch(`http://localhost:5000/note/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
-        setIsReload(!isReload)
+        setIsReload(!isReload);
       });
+   }
   };
 
   // 3.Function: To Update Note
-  const updateNote = (e,id, closeModal) => {
-    e.preventDefault()
-    const user_name = e.target.user_name.value
-    const text = e.target.text.value
-    
-    if (user_name, text) {
+  const updateNote = (e, id, closeModal) => {
+    e.preventDefault();
+    const user_name = e.target.user_name.value;
+    const text = e.target.text.value;
+
+    if (user_name && text) {
       fetch(`http://localhost:5000/note/${id}`, {
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({user_name, text}),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setIsReload(!isReload)
-        closeModal()
-      });
+        method: "PUT",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ user_name, text }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setIsReload(!isReload);
+          closeModal();
+        });
     }
-  }
+  };
 
   // 4.Function: To POST Note
 
@@ -82,7 +88,12 @@ function App() {
       <InputForm insertNote={insertNote} />
       <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
         {notes.map((note) => (
-          <NoteCard key={note._id} updateNote={updateNote} note={note} deleteNote={deleteNote} />
+          <NoteCard
+            key={note._id}
+            updateNote={updateNote}
+            note={note}
+            deleteNote={deleteNote}
+          />
         ))}
       </div>
     </div>

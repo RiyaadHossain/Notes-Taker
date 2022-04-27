@@ -23,7 +23,7 @@ const NoteCard = ({ note, deleteNote, updateNote }) => {
         >
           <p className="text-center p-2  fs-2 fw-bold text-dark">
             {" "}
-            {note.user_name?.substring(0, 1)}
+            {note.user_name?.substring(0, 1).toUpperCase()}
           </p>
         </div>
         <div className="card-body mt-5">
